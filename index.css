@@ -1,0 +1,81 @@
+body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #fce4ec;
+      font-family: sans-serif;
+    }
+
+    .cake {
+      position: relative;
+    }
+
+    .layer {
+      width: 200px;
+      height: 60px;
+      background: #ffb6c1;
+      border-radius: 10px;
+      margin-bottom: 5px;
+    }
+
+    .layer.middle {
+      width: 180px;
+      margin-left: 10px;
+    }
+
+    .layer.top {
+      width: 160px;
+      margin-left: 20px;
+    }
+
+    .candles {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+    }
+
+    .candle {
+      width: 10px;
+      height: 40px;
+      background: white;
+      position: relative;
+    }
+
+    .flame {
+      width: 12px;
+      height: 12px;
+      background: orange;
+      border-radius: 50% 50% 50% 50%;
+      position: absolute;
+      top: -12px;
+      left: -1px;
+      animation: flicker 0.3s infinite alternate;
+    }
+
+    .off {
+      display: none;
+    }
+
+    @keyframes flicker {
+      from {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: scale(1.2) translateY(-2px);
+        opacity: 0.8;
+      }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
