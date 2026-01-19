@@ -1,30 +1,41 @@
 const flames = document.querySelectorAll(".flame");
 
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(stream => {
-      const audioContext = new AudioContext();
-      const mic = audioContext.createMediaStreamSource(stream);
-      const analyser = audioContext.createAnalyser();
+function blowCandles() {
+  flames.forEach(flame => {
+    flame.classList.add("off");
+    // Add smoke effect or something
+    const smoke = document.createElement("div");
+    smoke.className = "smoke";
+    flame.parentElement.appendChild(smoke);
+    setTimeout(() => smoke.remove(), 2000);
+  });
+}
 
-      analyser.fftSize = 256;
-      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    const audioContext = new AudioContext();
+    const mic = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
 
-      mic.connect(analyser);
+    analyser.fftSize = 256;
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-      function detectBlow() {
-        analyser.getByteFrequencyData(dataArray);
+    mic.connect(analyser);
 
-        let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
+    function detectBlow() {
+      analyser.getByteFrequencyData(dataArray);
 
-        if (volume > 40) {
-          flames.forEach(flame => flame.classList.add("off"));
-        }
+      let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
 
-        requestAnimationFrame(detectBlow);
+      if (volume > 40) {
+        blowCandles();
       }
 
-      detectBlow();
-    })
-    .catch(err => {
-      console.log("Microphone access denied", err);
-    });
+      requestAnimationFrame(detectBlow);
+    }
+
+    detectBlow();
+  })
+  .catch(err => {
+    console.log("Microphone access denied", err);
+  });
