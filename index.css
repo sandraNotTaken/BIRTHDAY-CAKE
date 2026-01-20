@@ -4,8 +4,15 @@ body {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #fce4ec;
+      background: linear-gradient(135deg, #fce4ec, #e1bee7);
       font-family: sans-serif;
+    }
+
+    h2 {
+      margin-bottom: 40px;
+      color: #d81b60;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-size: 2.5em;
     }
 
     .cake {
@@ -21,6 +28,7 @@ body {
       margin-bottom: 5px;
       position: relative;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 2px solid #fff;
     }
 
     .layer::before {
@@ -32,6 +40,15 @@ body {
       height: 10px;
       background: linear-gradient(to bottom, #fff, #ffb6c1);
       border-radius: 10px 10px 0 0;
+    }
+
+    .layer::after {
+      content: '🍓🍓🍓';
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      font-size: 12px;
+      line-height: 1;
     }
 
     .layer.middle {

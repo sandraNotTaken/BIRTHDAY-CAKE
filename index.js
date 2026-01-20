@@ -27,7 +27,9 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 
       let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
 
-      if (volume > 40) {
+      console.log('Volume:', volume); // Debug
+
+      if (volume > 20) {  // Lower threshold
         blowCandles();
       }
 
