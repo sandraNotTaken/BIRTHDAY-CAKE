@@ -48,6 +48,10 @@ function blowOut() {
 // CELEBRATION
 function celebrate() {
   showMessage("🎉 Happy Birthday Sandra! 🎉");
+  const cake = document.querySelector(".cake");
+  cake.style.animation = "bounce 1s ease-in-out";
+  setTimeout(() => cake.style.animation = "float 5s ease-in-out infinite", 1000);
+
 
   for (let i = 0; i < 120; i++) {
     const confetti = document.createElement("div");

@@ -1,8 +1,8 @@
 :root {
   --bg-light: linear-gradient(135deg,#fce4ec,#e1bee7);
   --bg-dark: linear-gradient(135deg,#111,#222);
-  --glow-light: 15px;
-  --glow-dark: 30px;
+  --glow-light: 20px;
+  --glow-dark: 35px;
 }
 
 body {
@@ -15,6 +15,7 @@ body {
   background: var(--bg-light);
   font-family: system-ui;
   transition: background 0.5s;
+  perspective: 1000px;
 }
 
 body.dark {
@@ -22,78 +23,154 @@ body.dark {
   color: white;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 6px;
-  border: none;
+h2 {
+  text-align: center;
+  color: #d81b60;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  font-size: 2.5rem;
+  margin-bottom: 40px;
 }
 
+/* Cake container */
 .cake {
   position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(5deg) rotateY(-5deg);
   animation: float 5s ease-in-out infinite;
 }
 
+/* Cake layers */
 .layer {
-  width: 200px;
+  width: 220px;
   height: 60px;
-  background: linear-gradient(#8b4513,#654321);
-  border-radius: 10px;
   margin-bottom: 6px;
+  border-radius: 15px;
+  position: relative;
+  overflow: visible;
+  background: radial-gradient(circle at 50% 20%, #c68642 0%, #8b4513 70%);
+  box-shadow: inset 0 -8px 15px rgba(0,0,0,0.3),
+              0 6px 10px rgba(0,0,0,0.2);
 }
 
+/* Frosting on top of each layer */
+.layer::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: linear-gradient(to bottom, #fff0f5, #ffb6c1);
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Sprinkles on frosting */
+.layer::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background-image:
+    radial-gradient(circle at 20px 5px, #ff0000 2px, transparent 2px),
+    radial-gradient(circle at 50px 2px, #00ff00 2px, transparent 2px),
+    radial-gradient(circle at 80px 6px, #0000ff 2px, transparent 2px),
+    radial-gradient(circle at 110px 4px, #ffff00 2px, transparent 2px),
+    radial-gradient(circle at 140px 3px, #ff00ff 2px, transparent 2px);
+}
+
+/* Middle vanilla layer */
 .layer.middle {
-  width: 180px;
-  margin-left: 10px;
-  background: linear-gradient(#fff8dc,#f5deb3);
+  width: 190px;
+  margin-left: 15px;
+  background: radial-gradient(circle at 50% 20%, #fff8dc 0%, #f5deb3 80%);
+  box-shadow: inset 0 -6px 10px rgba(0,0,0,0.2),
+              0 4px 8px rgba(0,0,0,0.2);
 }
 
+/* Top strawberry layer */
 .layer.top {
   width: 160px;
-  margin-left: 20px;
-  background: linear-gradient(#ffb6c1,#ff69b4);
+  margin-left: 30px;
+  background: radial-gradient(circle at 50% 20%, #ffc0cb 0%, #ff69b4 80%);
+  box-shadow: inset 0 -5px 8px rgba(0,0,0,0.3),
+              0 4px 6px rgba(0,0,0,0.2);
 }
 
+/* Candles */
 .candles {
   position: absolute;
-  top: -45px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 14px;
+  gap: 18px;
+  z-index: 2;
 }
 
 .candle {
-  width: 10px;
+  width: 12px;
   height: 40px;
-  background: white;
-  border-radius: 5px;
+  background: linear-gradient(to bottom, #fff, #f0f0f0);
+  border-radius: 6px 6px 2px 2px;
   position: relative;
   cursor: pointer;
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
 }
 
+/* Wax stripes */
+.candle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 2px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.3) 0 4px,
+    rgba(255,255,255,0) 4px 8px
+  );
+  border-radius: 1px;
+}
+
+/* Candle base highlight */
+.candle::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -3px;
+  width: 18px;
+  height: 5px;
+  background: #ffb6c1;
+  border-radius: 50%;
+}
+
+/* Flame */
 .flame {
   position: absolute;
   top: -25px;
   left: -1px;
   width: 12px;
-  height: 24px;
-  background: radial-gradient(circle,#fff,#ff0,#f90,#f30);
-  border-radius: 50%;
+  height: 26px;
+  background: radial-gradient(circle, #fff 0%, #ff0 40%, #f90 70%, #f30 100%);
+  border-radius: 50% 50% 50% 50%;
   animation: flicker 0.4s infinite alternate;
-  box-shadow: 0 0 var(--glow-light) orange;
+  box-shadow: 0 0 var(--glow-light) orange, inset 0 0 4px rgba(255,255,0,0.7);
   transform-origin: bottom;
 }
 
 body.dark .flame {
-  box-shadow: 0 0 var(--glow-dark) orange;
+  box-shadow: 0 0 var(--glow-dark) orange, inset 0 0 6px rgba(255,255,0,0.9);
 }
 
 .off {
   display: none;
 }
 
+/* Smoke */
 .smoke {
   position: absolute;
   top: -20px;
@@ -104,6 +181,7 @@ body.dark .flame {
   animation: smoke 2s forwards;
 }
 
+/* Confetti */
 .confetti {
   position: fixed;
   top: -10px;
@@ -112,6 +190,7 @@ body.dark .flame {
   animation: fall 3s linear forwards;
 }
 
+/* Celebration message */
 .message {
   position: fixed;
   top: 50%;
@@ -119,8 +198,19 @@ body.dark .flame {
   transform: translate(-50%,-50%);
   font-size: 2.5rem;
   z-index: 10;
+  animation: pop 0.5s ease-out;
 }
 
+/* Cake bounce effect during celebration */
+@keyframes bounce {
+  0% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
+  25% { transform: translateY(-10px) rotateX(7deg) rotateY(-3deg); }
+  50% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
+  75% { transform: translateY(-5px) rotateX(4deg) rotateY(-6deg); }
+  100% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
+}
+
+/* Animations */
 @keyframes flicker {
   from { transform: scale(1) rotate(-2deg); }
   to { transform: scale(1.1) rotate(2deg); }
@@ -136,4 +226,9 @@ body.dark .flame {
 
 @keyframes float {
   50% { transform: translateY(-10px); }
+}
+
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
