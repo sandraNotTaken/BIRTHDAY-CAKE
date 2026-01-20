@@ -1,4 +1,7 @@
 const flames = document.querySelectorAll(".flame");
+const candles = document.querySelectorAll(".candle");
+
+let blowCounter = 0;
 
 function blowCandles() {
   flames.forEach(flame => {
@@ -13,7 +16,12 @@ function blowCandles() {
   celebrate();
 }
 
+function relightCandles() {
+  flames.forEach(flame => flame.classList.remove("off"));
+}
+
 function celebrate() {
+  const name = "Alex"; // Hardcoded name
   for (let i = 0; i < 100; i++) {
     const confetti = document.createElement("div");
     confetti.className = "confetti";
@@ -26,10 +34,14 @@ function celebrate() {
   // Add celebration message
   const message = document.createElement("div");
   message.className = "celebration-message";
-  message.textContent = "🎉 Happy Birthday! 🎉";
+  message.textContent = `🎉 Happy Birthday, ${name}! 🎉`;
   document.body.appendChild(message);
   setTimeout(() => message.remove(), 5000);
 }
+
+candles.forEach(candle => {
+  candle.addEventListener("click", relightCandles);
+});
 
 navigator.mediaDevices.getUserMedia({ audio: true })
   .then(stream => {
@@ -47,10 +59,14 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 
       let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
 
-      console.log('Volume:', volume); // Debug
-
-      if (volume > 20) {  // Lower threshold
-        blowCandles();
+      if (volume > 50) {
+        blowCounter++;
+        if (blowCounter > 10) {  // Require sustained high volume
+          blowCandles();
+          blowCounter = 0;
+        }
+      } else {
+        blowCounter = 0;
       }
 
       requestAnimationFrame(detectBlow);

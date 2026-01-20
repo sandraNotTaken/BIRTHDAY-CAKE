@@ -6,6 +6,20 @@ body {
       align-items: center;
       background: linear-gradient(135deg, #fce4ec, #e1bee7);
       font-family: sans-serif;
+      transition: background 0.5s;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      color: white;
+    }
+
+    body.dark h2 {
+      color: #ff6b9d;
+    }
+
+    body.dark .layer {
+      border-color: #333;
     }
 
     h2 {
@@ -29,6 +43,7 @@ body {
       position: relative;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       border: 2px solid #fff;
+      overflow: hidden;
     }
 
     .layer::before {
@@ -52,6 +67,19 @@ body {
       background: linear-gradient(to bottom, #ffb6c1, #ff69b4);
       border-radius: 0 0 10px 10px;
       clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+
+    .layer .sprinkles {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20px 20px, #ff0000 2px, transparent 2px),
+                  radial-gradient(circle at 60px 30px, #00ff00 2px, transparent 2px),
+                  radial-gradient(circle at 100px 15px, #0000ff 2px, transparent 2px),
+                  radial-gradient(circle at 140px 25px, #ffff00 2px, transparent 2px),
+                  radial-gradient(circle at 180px 35px, #ff00ff 2px, transparent 2px);
     }
 
     .layer.middle {
@@ -82,6 +110,7 @@ body {
       position: relative;
       border-radius: 5px 5px 0 0;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+      cursor: pointer;
     }
 
     .candle::after {
