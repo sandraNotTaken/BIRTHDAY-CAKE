@@ -23,15 +23,7 @@ body.dark {
   color: white;
 }
 
-h2 {
-  text-align: center;
-  color: #d81b60;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-}
-
-/* Cake container */
+/* Cake */
 .cake {
   position: relative;
   transform-style: preserve-3d;
@@ -39,7 +31,7 @@ h2 {
   animation: float 5s ease-in-out infinite;
 }
 
-/* Cake layers */
+/* Layers */
 .layer {
   width: 220px;
   height: 60px;
@@ -52,20 +44,24 @@ h2 {
               0 6px 10px rgba(0,0,0,0.2);
 }
 
-/* Frosting on top of each layer */
+/* Frosting on each layer */
 .layer::before {
   content: '';
   position: absolute;
   top: -12px;
   left: 0;
   width: 100%;
-  height: 15px;
+  height: 18px;
   background: linear-gradient(to bottom, #fff0f5, #ffb6c1);
-  border-radius: 50% 50% 20% 20%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-radius: 50% 50% 25% 25%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  clip-path: polygon(
+    0% 100%, 5% 80%, 15% 90%, 25% 70%, 35% 85%,
+    45% 75%, 55% 88%, 65% 70%, 75% 85%, 85% 65%, 95% 80%, 100% 100%
+  );
 }
 
-/* Sprinkles on frosting */
+/* Sprinkles */
 .layer::after {
   content: '';
   position: absolute;
@@ -81,23 +77,9 @@ h2 {
     radial-gradient(circle at 140px 3px, #ff00ff 2px, transparent 2px);
 }
 
-/* Middle vanilla layer */
-.layer.middle {
-  width: 190px;
-  margin-left: 15px;
-  background: radial-gradient(circle at 50% 20%, #fff8dc 0%, #f5deb3 80%);
-  box-shadow: inset 0 -6px 10px rgba(0,0,0,0.2),
-              0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* Top strawberry layer */
-.layer.top {
-  width: 160px;
-  margin-left: 30px;
-  background: radial-gradient(circle at 50% 20%, #ffc0cb 0%, #ff69b4 80%);
-  box-shadow: inset 0 -5px 8px rgba(0,0,0,0.3),
-              0 4px 6px rgba(0,0,0,0.2);
-}
+/* Middle and Top layers */
+.layer.middle { width: 190px; margin-left: 15px; background: radial-gradient(circle at 50% 20%, #fff8dc 0%, #f5deb3 80%); }
+.layer.top { width: 160px; margin-left: 30px; background: radial-gradient(circle at 50% 20%, #ffc0cb 0%, #ff69b4 80%); }
 
 /* Candles */
 .candles {
@@ -120,7 +102,6 @@ h2 {
   box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
 }
 
-/* Wax stripes */
 .candle::before {
   content: '';
   position: absolute;
@@ -128,15 +109,10 @@ h2 {
   left: 2px;
   width: 2px;
   height: 100%;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.3) 0 4px,
-    rgba(255,255,255,0) 4px 8px
-  );
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.3) 0 4px, rgba(255,255,255,0) 4px 8px);
   border-radius: 1px;
 }
 
-/* Candle base highlight */
 .candle::after {
   content: '';
   position: absolute;
@@ -156,7 +132,7 @@ h2 {
   width: 12px;
   height: 26px;
   background: radial-gradient(circle, #fff 0%, #ff0 40%, #f90 70%, #f30 100%);
-  border-radius: 50% 50% 50% 50%;
+  border-radius: 50%;
   animation: flicker 0.4s infinite alternate;
   box-shadow: 0 0 var(--glow-light) orange, inset 0 0 4px rgba(255,255,0,0.7);
   transform-origin: bottom;
@@ -166,9 +142,7 @@ body.dark .flame {
   box-shadow: 0 0 var(--glow-dark) orange, inset 0 0 6px rgba(255,255,0,0.9);
 }
 
-.off {
-  display: none;
-}
+.off { display: none; }
 
 /* Smoke */
 .smoke {
@@ -181,16 +155,35 @@ body.dark .flame {
   animation: smoke 2s forwards;
 }
 
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: yellow;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #fff;
+  animation: sparkle 1s forwards;
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
 /* Confetti */
 .confetti {
   position: fixed;
   top: -10px;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
   animation: fall 3s linear forwards;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* Celebration message */
+/* Messages */
 .message {
   position: fixed;
   top: 50%;
@@ -201,7 +194,7 @@ body.dark .flame {
   animation: pop 0.5s ease-out;
 }
 
-/* Cake bounce effect during celebration */
+/* Cake bounce */
 @keyframes bounce {
   0% { transform: translateY(0px) rotateX(5deg) rotateY(-5deg); }
   25% { transform: translateY(-10px) rotateX(7deg) rotateY(-3deg); }
@@ -211,24 +204,8 @@ body.dark .flame {
 }
 
 /* Animations */
-@keyframes flicker {
-  from { transform: scale(1) rotate(-2deg); }
-  to { transform: scale(1.1) rotate(2deg); }
-}
-
-@keyframes smoke {
-  to { transform: translateY(-30px) scale(1.5); opacity: 0; }
-}
-
-@keyframes fall {
-  to { transform: translateY(110vh) rotate(720deg); }
-}
-
-@keyframes float {
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes pop {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
+@keyframes flicker { from { transform: scale(1) rotate(-2deg);} to { transform: scale(1.1) rotate(2deg);} }
+@keyframes smoke { to { transform: translateY(-30px) scale(1.5); opacity: 0; } }
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+@keyframes float { 50% { transform: translateY(-10px); } }
+@keyframes pop { 0% { transform: translate(-50%, -50%) scale(0); opacity:0; } 100% { transform: translate(-50%, -50%) scale(1); opacity:1; } }

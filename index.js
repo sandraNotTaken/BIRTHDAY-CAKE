@@ -1,11 +1,17 @@
 const flames = document.querySelectorAll(".flame");
 const candles = document.querySelectorAll(".candle");
+const cake = document.querySelector(".cake");
 const body = document.body;
 
 let blown = false;
 let blowCounter = 0;
 let micStarted = false;
 let audioCtx, analyser, dataArray;
+let songPlayed = false;
+
+// Add background birthday song
+const birthdaySong = new Audio("birthday-song.mp3"); // put your mp3 file in same folder
+birthdaySong.volume = 0.5;
 
 // DOUBLE-CLICK TO TOGGLE DARK MODE AND START MIC
 body.addEventListener("dblclick", () => {
@@ -31,6 +37,7 @@ function blowOut() {
   if (blown) return;
   blown = true;
 
+  // Turn off flames + create smoke
   flames.forEach(flame => {
     flame.classList.add("off");
 
@@ -41,26 +48,42 @@ function blowOut() {
     setTimeout(() => smoke.remove(), 2000);
   });
 
+  // Show make-a-wish message
   showMessage("Make a wish… ✨");
-  setTimeout(celebrate, 3000);
+
+  // Play birthday song once
+  if (!songPlayed) {
+    birthdaySong.play();
+    songPlayed = true;
+  }
+
+  // Celebration after short delay
+  setTimeout(celebrate, 1000);
 }
 
 // CELEBRATION
 function celebrate() {
-  showMessage("🎉 Happy Birthday Sandra! 🎉");
-  const cake = document.querySelector(".cake");
+  showMessage("🎉 Happy Birthday! 🎉");
+
+  // Cake bounce
   cake.style.animation = "bounce 1s ease-in-out";
-  setTimeout(() => cake.style.animation = "float 5s ease-in-out infinite", 1000);
+  setTimeout(() => {
+    cake.style.animation = "float 5s ease-in-out infinite";
+  }, 1000);
 
-
+  // Generate confetti across full page
   for (let i = 0; i < 120; i++) {
     const confetti = document.createElement("div");
     confetti.className = "confetti";
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360},100%,50%)`;
     confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+    confetti.style.width = 6 + Math.random() * 6 + "px";
+    confetti.style.height = confetti.style.width;
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
 
     document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 3000);
+    setTimeout(() => confetti.remove(), 4000);
   }
 }
 
@@ -98,7 +121,7 @@ function detectBlow() {
 
   const volume = dataArray.reduce((a,b) => a + b) / dataArray.length;
 
-  // LOWERED THRESHOLD & FRAMES TO MAKE IT EASIER
+  // Lowered threshold & frames for easier blow
   if (volume > 45) {
     blowCounter++;
     if (blowCounter > 10) {
